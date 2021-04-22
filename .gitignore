@@ -1,0 +1,8 @@
+*.depend
+*.layout
+.dep.inc
+*cscope*
+sprite_lookup.h
+obj/
+bin/
+output/
