@@ -24,7 +24,7 @@ namespace SML3 {
         byte* sectors = new byte[48]{};
         byte* trace = new byte[LEVEL_SIZE]{};
 
-        header_struct* savepoint = (header_struct*) deref(12, HEADER_SML3, CL + 43);
+        header_struct* savepoint = reinterpret_cast<header_struct*> (deref(12, HEADER_SML3, CL + 43));
 
         point16 player = decode_player(HEADER(player));
         point16 player2 = decode_player(savepoint->player);
@@ -49,11 +49,11 @@ namespace SML3 {
                 //cout << int(current) << " " << flush;
 
                 if (current <= 2) {
-                    byte* h = (current == 2 ? (byte*)savepoint : header);
+                    byte* h = (current == 2 ? reinterpret_cast<byte*>(savepoint) : header);
                     enemy_table = WARP(h, enemies, false);
                     load_cache(cache, tile_cache, h, false);
                 } else {
-                    byte* h = (byte*)get_warp(current - 16);
+                    byte* h = reinterpret_cast<byte*>(get_warp(current - 16));
                     load_cache(cache, tile_cache, h, true);
                     enemy_table = WARP(h, enemies, true);
                 }
@@ -162,7 +162,7 @@ namespace SML3 {
 
 	warp_struct* get_warp(byte s) {
         uint16_t warp = *(uint16_t*) address(0xC, 0x4F30 + CL*64 + s*2);
-        return (warp_struct*) address(0xC, warp);
+        return reinterpret_cast<warp_struct*>(address(0xC, warp));
 	}
 
 
@@ -192,8 +192,15 @@ namespace SML3 {
             byte b = *(data++);
             byte l = b >> 4, r = b & 0xF;
 
-            if (l) sprites.emplace_back(p, l); ++p;
-            if (r) sprites.emplace_back(p, r); ++p;
+            if(l) {
+				sprites.emplace_back(p, l);
+			} 
+			++p;
+            
+			if(r) {
+				sprites.emplace_back(p, r); 
+			}
+			++p;
             p += *(data++) * 2;
         }
 	}
