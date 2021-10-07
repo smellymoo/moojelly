@@ -25,7 +25,7 @@ struct Bitmap {
     bool auto_delete = true;
 
     Bitmap() {};
-    Bitmap(int width, int height, bool stack) : width(width), height(height), auto_delete(stack) { RGB = new RGB_DATA[width * height]{}; }
+    Bitmap(int pWidth, int pHeight, bool stack) : width(pWidth), height(pHeight), auto_delete(stack) { RGB = new RGB_DATA[width * height]{}; }
     ~Bitmap() { if (auto_delete) delete[] RGB; }
 };
 
@@ -33,6 +33,6 @@ struct sprite {
    uint16_t x, y;
    byte type;
 
-   sprite(uint16_t x, uint16_t y, byte t) : x(x), y(y), type(t) {} //SML2
+   sprite(uint16_t pX, uint16_t pY, byte t) : x(pX), y(pY), type(t) {} //SML2
    sprite(unsigned int p, byte t) : type(t) { x = (p & 0xFF) * 2 + 1; y = ((p >> 8) + 17) * 2; } //SML3
 };

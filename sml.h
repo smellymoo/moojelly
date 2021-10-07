@@ -12,7 +12,7 @@
 #define SML2_HEADER     ((SML2::header_struct*)header)
 #define SML3_HEADER     ((SML3::header_struct*)header)
 #define SML_HEADER(X)   (game == 2 ? SML2_HEADER->X : SML3_HEADER->X)
-#define HEADER(X)       ((header_struct*)header)->X
+#define HEADER(X)       (reinterpret_cast<header_struct*>(header))->X
 
 namespace ROM {
 

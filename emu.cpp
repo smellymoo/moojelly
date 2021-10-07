@@ -37,7 +37,7 @@ bool load_rom(std::string filename) {
     std::ifstream file(filename, std::ios::binary);
     if (!file) { std::cout << "ERROR: file.\n"; return false; }
 
-    file.read ((char*)DATA, ROM_SIZE);
+    file.read (reinterpret_cast<char*>(DATA), ROM_SIZE);
     file.close();
 
     return true;

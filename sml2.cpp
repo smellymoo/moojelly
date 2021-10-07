@@ -52,7 +52,7 @@ namespace SML2 {
         copy_cache_tiles(cache, address(0x1B, 0x7000), 0, 48);
         copy_cache_tiles(cache, address(7, 0x6A00), 104, 56);
 
-        auto tiles = (header2_struct*) address(0, HEADER_TILES);
+        auto tiles = reinterpret_cast<header2_struct*> (address(0, HEADER_TILES));
         copy_cache_tiles(cache, address(tiles[CL].bank, tiles[CL].addr), 160, 96);
 	}
 

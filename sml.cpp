@@ -26,17 +26,17 @@ namespace ROM {
 		ifstream file(filename, ios::binary);
 		if (!file) { cout << "ERROR: file.\n"; return false; }
 
-		file.read ((char*)DATA, ROM_SIZE);
+		file.read (reinterpret_cast<char*>(DATA), ROM_SIZE);
 		file.close();
 
-		rom_title = (char*) address(0,0x134);
+		rom_title = reinterpret_cast<char*> (address(0,0x134));
 		rom_ver = DATA[332];
 
 		if (strcmp(rom_title, "SUPERMARIOLAND3")==0) game = 3;
 		else if (strcmp(rom_title, "MARIOLAND2")==0) game = 2;
 		else { cout << "ERROR: ROM '" << rom_title << "' not supported.\n"; return false; }
 
-		cout << "LOADED: " << rom_title << " (v1." << (int)rom_ver << ").\n";
+		cout << "LOADED: " << rom_title << " (v1." <<  static_cast<int>(rom_ver) << ").\n";
 		return true;
 	}
 
@@ -199,7 +199,7 @@ namespace ROM {
 	}
 
 	void save_png(Bitmap &bitmap, string filename) {
-        wxImage image = wxImage(bitmap.width, bitmap.height, (byte*)bitmap.RGB, true);
+        wxImage image = wxImage(bitmap.width, bitmap.height,  reinterpret_cast<byte*>(bitmap.RGB), true);
 		image.SaveFile(filename, wxBITMAP_TYPE_PNG);
 	}
 
@@ -271,15 +271,15 @@ namespace ROM {
 
 	void fix_CRC() {
 		ushort crc = 0;
-		for (int i = 0x134; i < 0x14D; i++) crc = (ushort)(crc - DATA[i] - 1);
-		DATA[0x14D] = (byte)(crc & 0xFF);
+		for (int i = 0x134; i < 0x14D; i++) crc = static_cast<ushort>(crc - DATA[i] - 1);
+		DATA[0x14D] = static_cast<byte>((crc & 0xFF));
 
 		crc = 0;
 		for (int j = 0; j < ROM_SIZE; j++)
 			if (j != 0x14E && j != 0x14F) crc += DATA[j];
 
-		DATA[0x14E] = (byte)(crc >> 8);
-		DATA[0x14F] = (byte)(crc & 0xFF);
+		DATA[0x14E] = static_cast<byte>((crc >> 8));
+		DATA[0x14F] = static_cast<byte>((crc & 0xFF));
 	}
 
 
@@ -303,7 +303,7 @@ namespace ROM {
 
 
 	byte* deref(byte bank, uint16_t addr, uint16_t offset) {
-		uint16_t *word = (uint16_t*) address(bank, addr);
+		uint16_t *word = reinterpret_cast<uint16_t*>(address(bank, addr));
 		word += offset;
 		return address(bank, *word);
 	}

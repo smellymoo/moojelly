@@ -52,7 +52,7 @@ namespace SML3 {
         byte flags;
         int jump;
 
-        fill_todo (uint16_t p, byte flags, byte jump) : p(p), flags(flags), jump(jump) { }
+        fill_todo (uint16_t pP, byte pFlags, byte pJump) : p(pP), flags(pFlags), jump(pJump) { }
     };
 
     enum fill_t { spike, solid, bounce, platform, smash, sea, follow, sky, door, };
