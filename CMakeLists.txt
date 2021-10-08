@@ -36,8 +36,14 @@ file(GLOB HEADER_FILES
     "./*.h"
     )
 
+set (BINARY_NAME "Moojelly")
+
+if(WIN32)
+    set (BINARY_NAME "Moojelly.exe")
+endif()
 
 
-add_executable(Moojelly ${SRC_FILES} )
-target_include_directories(Moojelly PUBLIC wxWidgets_INCLUDE_DIRS)
-target_link_libraries(Moojelly ${wxWidgets_LIBRARIES})
+
+add_executable(${BINARY_NAME} ${SRC_FILES} )
+target_include_directories(${BINARY_NAME} PUBLIC wxWidgets_INCLUDE_DIRS)
+target_link_libraries(${BINARY_NAME} ${wxWidgets_LIBRARIES})
