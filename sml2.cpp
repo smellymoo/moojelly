@@ -141,14 +141,15 @@ namespace SML2 {
 
 		set_pal(HEADER(pal_sprite1));
 
-        byte* store[LEVELS];
-        unpack_sprites(DATA + 0xE077, store);
-        unzip_sprites(store[CL], sprites);
+        byte* store = new byte[LEVELS];
+        unpack_sprites(DATA + 0xE077, &store);
+        unzip_sprites(&store[CL], sprites);
 
         byte *p = address(0x1B, SPRITES_TILES + CL*4);
         copy_cache_tiles(cache, address(p[0], *(uint16_t*)(p+2)), 48, 56);
 
 
 		for(auto sprite: sprites) render_sprite(bitmap, cache, sprite.type, sprite.x, sprite.y);
+		delete[] store;
 	}
 }

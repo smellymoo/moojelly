@@ -8,7 +8,11 @@
 #define FILL(P, F, J)  if (!mark[P]) { todo.emplace(P, F, J); mark[P] = filler; }
 
 namespace SML3 {
+#ifdef _MSC_VER 
+    struct header_struct {
+#else
     struct __attribute__((packed)) header_struct {
+#endif
         byte tile_bank;
         uint16_t tiles;
         uint16_t tiles2;
@@ -28,8 +32,11 @@ namespace SML3 {
         byte pal_bg;
         uint16_t enemies;
     };
-
+#ifdef _MSC_VER 
+    struct warp_struct {
+#else
     struct __attribute__((packed)) warp_struct {
+#endif
         byte sector;
         byte player_y;
         byte player_x;

@@ -98,8 +98,11 @@ namespace EMU {
                 union {
                     uint16_t AF;
                     struct {
-
+#ifdef _MSC_VER 
+                         struct{
+#else
                          struct __attribute__ ((packed)) {
+#endif
                             int F_pad:4;
                             bool FC:1; bool HC:1; bool N:1; bool Z:1;
                         };

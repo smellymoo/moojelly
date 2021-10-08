@@ -1,4 +1,8 @@
+#ifdef _MSC_VER 
+#include <wx/file.h>
+#else
 #include <wx-3.0/wx/file.h>
+#endif
 #include <stack>
 
 #include "sml.h"
@@ -209,7 +213,9 @@ namespace ROM {
 
 		for (int y = 0; y < bitmap.height; ++y) for (int x = 0; x < bitmap.width; ++x)  {
 			byte b = unzipped[x + y*bitmap.width] * 2;
-			bitmap.RGB[x + y*bitmap.width] = (RGB_DATA){b, b, b};
+			bitmap.RGB[x + y * bitmap.width].b = b;
+			bitmap.RGB[x + y * bitmap.width].g = b;
+			bitmap.RGB[x + y * bitmap.width].r = b;
 		}
 
 		string filename = "output/map_" + to_string(CL) + ".png";
@@ -270,8 +276,8 @@ namespace ROM {
 
 
 	void fix_CRC() {
-		ushort crc = 0;
-		for (int i = 0x134; i < 0x14D; i++) crc = static_cast<ushort>(crc - DATA[i] - 1);
+		unsigned short int crc = 0;
+		for (int i = 0x134; i < 0x14D; i++) crc = static_cast<unsigned int short>(crc - DATA[i] - 1);
 		DATA[0x14D] = static_cast<byte>((crc & 0xFF));
 
 		crc = 0;

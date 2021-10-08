@@ -6,7 +6,11 @@
 #define SPRITES_TILES	(ROM::rom_ver == 2 ? 0x362D : 0x362A)
 
 namespace SML2 {
+#ifdef _MSC_VER 
+    struct header_struct {
+#else
     struct __attribute__((packed)) header_struct {
+#endif
         point16 player, viewport;
         byte unknown1; //focus_shift 00/80
         byte unknown2; //castle?
@@ -18,8 +22,11 @@ namespace SML2 {
         byte map_sub;
         byte time; // Multiply by 0x64
     };
-
+#ifdef _MSC_VER 
+    struct header2_struct { //map tiles
+#else
     struct __attribute__((packed)) header2_struct { //map tiles
+#endif
         byte bank;
         byte unknown;
         uint16_t addr;

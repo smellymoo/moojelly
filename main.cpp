@@ -1,3 +1,5 @@
+//#define __NDEBUG__
+
 #include <wx/config.h>
 #include "main.h"
 #include "sml.h"

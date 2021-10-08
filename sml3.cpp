@@ -355,17 +355,47 @@ namespace SML3 {
 
 
 	constexpr fill_t fill_type(byte block) {
+
+		if ((block >= 0) && (block <= 40) || (block == 60) || (block == 73) || (block == 74) || ((block >= 50) && (block <= 55)))
+		{
+			return solid;
+		}
+		if ((block >= 64) && (block <= 67))
+		{
+			return platform;
+		}
+
+		if ((block >= 41) && (block <= 46))
+		{
+			return smash;
+
+		}
+
+		if ((block >= 76 && block <= 82) || (block == 84) || (block == 88))
+		{
+			return sea;
+		}
+
+		if((block>=89 && block<=90) || (block>=86 && block<=87) || (block>=92 && block<= 95))
+		{
+			return spike;
+		}
+
 		switch (block) {
-			case 0 ... 40: case 60: case 73 ... 74: case 50 ... 55: return solid;
+			/*case 0 ... 40:
+			case 60: 
+			case 73 ... 74: case 50 ... 55: return solid;*/
 			case 47: return bounce;
-			case 64 ... 67: return platform;
-			case 41 ... 46: return smash;
-			case 76 ... 82: case 84: case 88: return sea;
-			case 68 ... 69: return follow;
-			case 89 ... 90: case 86 ... 87: case 92 ... 95: return spike;
+			/*case 64 ... 67: return platform;*/
+			/*case 41 ... 46: return smash;*/
+			/*case 76 ... 82: case 84: case 88: return sea;*/
+			case 68:
+			case 69: return follow;
+			/*case 89 ... 90: case 86 ... 87: case 92 ... 95: return spike;*/
             case 72: case 75: return door;
 			default: return sky;
 		}
+		return sky;
 	}
 
 	void trace_fill(byte* blockmap, byte* mark, byte* mark_sector, uint16_t from, byte filler) {
