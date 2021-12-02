@@ -4,4 +4,6 @@ This editor written in C++ works by extracting the levels from the original ROM,
 
 # contribution
 
-The eventual plan is to make a complete user made sequel to SML2 (and then maybe also SML3). So any help is very much appreciated, either by helping develop the editor or by submitting level designs (when the editor is completed).
+The eventual plan is to make a complete user made sequel to SML2 (and then maybe also SML3).
+
+Any help is very much appreciated, either by helping develop the editor or by submitting level designs (when the editor is completed).
